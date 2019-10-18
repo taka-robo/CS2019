@@ -8,11 +8,13 @@
             "type": "shell",
             "command": "g++",
             "args": [
+                "-std=c++11",
+                "-I/home/taka/Documents/cs2019/include",
                 "-g3",
                 "-o",
-                "./week2/ex1.out",
-                "-O0",
-                "./week2/ex1.cpp"
+                "./week2/cs1.out",
+                "-O3",
+                "./week2/cs1.cpp"
             ],
             "group": {
                 "kind": "build",

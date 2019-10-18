@@ -1,0 +1,9 @@
+BasedOnStyle: LLVM
+UseTab: 4 
+IndentWidth: 4
+BreakBeforeBraces: AllMan
+AllowShortIfStatementsOnASingleLine: false
+IndentCaseLabels: false
+AlignAfterOpenBracket: true
+AlignConsecutiveAssignments: true
+ColumnLimit: 0
