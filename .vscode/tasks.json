@@ -12,9 +12,9 @@
                 "-I/home/taka/Documents/cs2019/include",
                 "-g3",
                 "-o",
-                "./week2/cs1.out",
+                "./week2/cs1-c.out",
                 "-O3",
-                "./week2/cs1.cpp"
+                "./week2/cs1-c.cpp"
             ],
             "group": {
                 "kind": "build",

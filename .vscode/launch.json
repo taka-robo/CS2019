@@ -2,15 +2,15 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name":"(gdb) Launch",
-            "type":"cppdbg",
+            "name": "(gdb) Launch",
+            "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceRoot}/week2/ex1.out",
+            "program": "${workspaceRoot}/week2/cs1-c.out",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "MIMode": "gdb",
-            "miDebuggerPath":"/usr/bin/gdb",
+            "miDebuggerPath": "/usr/bin/gdb",
             "setupCommands": [
                 {
                     "description": "Enable pretty-primting for gdb",
@@ -18,9 +18,6 @@
                     "ignoreFailures": false
                 }
             ]
-
         }
     ]
 }
-
-
