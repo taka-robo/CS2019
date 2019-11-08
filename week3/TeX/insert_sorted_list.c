@@ -1,17 +1,10 @@
-/**
- * @file cs2-a.c
- * @brief 計算基礎工学の課題2a:配列を用いた整列挿入
- * @author Takaaki NARA
- * @date 11/08
- */
-#include "stdio.h"
 /*配列の要素数*/
 #define SIZE 100
 /*配列を要素数SIZEで宣言，0で初期化*/
 static int ARRAY[SIZE] = {};
+
 /*配列のどこまで要素が代入されたかを示す変数*/
 int ARRAYEND = 0;
-
 /**
  * @brief 配列の中身を3桁ごとに表示する関数
  * @return なし
@@ -79,19 +72,5 @@ int insert_sorted_list(int key)
     asc_sort_array();
     printf("No\n");
     print_array();
-    return 0;
-}
-
-int main(void)
-{
-    insert_sorted_list(8);
-    insert_sorted_list(3);
-    insert_sorted_list(12);
-    insert_sorted_list(1);
-    insert_sorted_list(8);
-    insert_sorted_list(10);
-    insert_sorted_list(5);
-    insert_sorted_list(0);
-    insert_sorted_list(3);
     return 0;
 }
