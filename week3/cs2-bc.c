@@ -1,6 +1,5 @@
 #include "stdio.h"
 #include "stdlib.h"
-//#include "list.h"
 struct node
 {
     int key;           //ノードの中に入っているデータ部分
@@ -15,7 +14,6 @@ void list_initialize(void)
 }
 struct node *insert_after(int key, struct node *pt) //挿入したいkeyの値と次に挿入したい場所のポイン
 {
-    printf("%s\n", __func__);
     struct node *new_node;                              //挿入されるキーを格納するノードへのポインタ
     new_node = (struct node *)malloc(sizeof *new_node); //ノードの確保
     if (new_node == NULL)
@@ -30,7 +28,6 @@ struct node *insert_after(int key, struct node *pt) //挿入したいkeyの値�
 }
 void print_list(struct node *pt)
 {
-    printf("%s\n", __func__);
     struct node *p;
     for (p = pt; p != NULL; p = p->next)
     {
@@ -40,7 +37,6 @@ void print_list(struct node *pt)
 }
 void print_whole_list(void)
 {
-    printf("%s\n", __func__);
     struct node *p;
     for (p = head->next; p != NULL; p = p->next)
     {
@@ -48,57 +44,36 @@ void print_whole_list(void)
     }
     printf("\n");
 }
-void sort_list()
+int insert_sorted_list(int num)
 {
-    printf("%s\n", __func__);
-    struct node *temp, *i, *j;
-    for (i = head->next; i != NULL; i = i->next)
-    {
-        for (j = i->next; j != NULL; j = j->next)
-        {
-
-            if (i->key > j->key)
-            {
-                temp->next = i->next;
-                i->next = j->next;
-                j->next = temp->next;
-            }
-        }
-    }
-}
-int insert_sorted_list(int key)
-{
-    printf("%s\n", __func__);
     struct node *p;
-    for (p = head->next; p != NULL; p = p->next)
+    struct node *insert_pt = head;
+    for (p = head->next; p != NULL && p->key <= num; insert_pt = p, p = p->next)
     {
-        if (key == p->key)
+        if (num == p->key)
         {
-            sort_list();
-            print_whole_list();
             return 1;
         }
-        // if (NULL == p->next)
-        // {
-        //     insert_after(key, p);
-        // }
     }
-    insert_after(key, head);
-    sort_list();
-    print_whole_list();
+    insert_after(num, insert_pt);
     return 0;
 }
 int main(void)
 {
+    int i;
+    int index[10] = {8, 12, 1, 8, 10, 0, 5, 3, 8, 4};
     list_initialize();
-    printf("%d\n", insert_sorted_list(8));
-    printf("%d\n", insert_sorted_list(12));
-    printf("%d\n", insert_sorted_list(1));
-    printf("%d\n", insert_sorted_list(8));
-    printf("%d\n", insert_sorted_list(10));
-    printf("%d\n", insert_sorted_list(5));
-    printf("%d\n", insert_sorted_list(0));
-    printf("%d\n", insert_sorted_list(3));
-    print_whole_list();
+    for (i = 0; i < 10; ++i)
+    {
+        if (insert_sorted_list(index[i]) == 1)
+        {
+            printf("%d has been inserted.\n", index[i]);
+        }
+        else
+        {
+            printf("%d was inserted.\n", index[i]);
+        }
+        print_whole_list();
+    }
     return 0;
 }

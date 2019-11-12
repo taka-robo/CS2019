@@ -3,9 +3,9 @@
     "configurations": [
         {
             "name": "(gdb) Launch",
-            "type": "cppdbg",
+            "type": "",
             "request": "launch",
-            "program": "${workspaceRoot}/week2/cs1-c.out",
+            "program": "${workspaceRoot}/week3/cs2-bc.out",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

@@ -1,0 +1,23 @@
+# Fdb version 3
+["pdflatex"] 1572100899 "/home/taka/Documents/cs2019/week2/report-c.tex" "/home/taka/Documents/cs2019/week2/report-c.pdf" "report-c" 1572100899
+  "/etc/texmf/web2c/texmf.cnf" 1572022881 475 c0e671620eb5563b2130f56340a5fde8 ""
+  "/home/taka/Documents/cs2019/week2/report-c.aux" 1572100899 8 a94a2480d3289e625eea47cd1b285758 ""
+  "/home/taka/Documents/cs2019/week2/report-c.tex" 1572100000 334 648ac5ced7abd815b1e7f24c22339808 ""
+  "/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/graphics.cfg" 1480098830 1224 978390e9c2234eab29404bc21b268d1e ""
+  "/usr/share/texlive/texmf-dist/tex/latex/graphics-def/dvipdfmx.def" 1498427493 10299 c742d2190e924996d2f4e34b541cd5e3 ""
+  "/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty" 1498427532 15275 7d676729b1bedd3e7f3c6717affb366c ""
+  "/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty" 1498427532 9066 649f2ccf62888e3d8c3e57256b70b8e1 ""
+  "/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty" 1480098830 2594 d18d5e19aa8239cf867fa670c556d2e9 ""
+  "/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty" 1480098830 3980 0a268fbfda01e381fa95821ab13b6aee ""
+  "/usr/share/texlive/texmf-dist/tex/latex/tools/verbatim.sty" 1480098841 7264 cf839ee7f0c2bfc711b0b88970764569 ""
+  "/usr/share/texlive/texmf-dist/tex/platex/base/jarticle.cls" 1506553433 25374 87cec365aad536bed75d7864a163645f ""
+  "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1520210507 32485 c64754543d8ac501bea6e75e209ea521 ""
+  "/usr/share/texmf/web2c/texmf.cnf" 1520210507 32485 c64754543d8ac501bea6e75e209ea521 ""
+  "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1572100802 4126571 45384d93c405ce6a2b7aa3c8284b50ee ""
+  "report-c.aux" 0 -1 0 ""
+  "report-c.tex" 1572100000 334 648ac5ced7abd815b1e7f24c22339808 ""
+  (generated)
+  "report-c.aux"
+  "/home/taka/Documents/cs2019/week2/report-c.log"
+  "report-c.log"
+  "/home/taka/Documents/cs2019/week2/report-c.pdf"
