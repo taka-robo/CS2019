@@ -39,9 +39,12 @@ void print_list(struct node *pt)
     }
     printf("\n");
 }
+/**
+ * @brief 指定したリストの中身をすべて表示する
+ * @param *pt:表示したいリストの先頭のアドレス
+ */
 void print_whole_list(struct node *pt)
 {
-    printf("%s\n", __func__);
     for (pt = pt->next; pt != NULL; pt = pt->next)
     {
         printf("%d -> ", pt->key); //pのkeyを表示して
@@ -68,54 +71,82 @@ int insert_sorted_list(int key)
     insert_after(key, insert_pt);
     return 0;
 }
+/**
+ * @brief listの全ノードを削除する
+ * @return なし
+ */
 void delete_all(void)
 {
-    printf("%s\n", __func__);
     struct node *p;
     struct node *temp;
-    for (p = head->next; p != NULL; p = temp)
+    //pの値がNULLになるまで繰り返す
+    for (p = head->next; p != NULL; p = p->next)
     {
+        //headの次の次のノードアドレスを一時変数に記憶しておく
         temp = p->next;
+        //headの次のノードのメモリを開放する
         free(head->next);
+        //headの次のノードを記憶しておいた次の次のノードのアドレスにつなぎ直す．
         head->next = temp;
     }
 }
+/**
+ * @brief 指定されたkeyを持つノードを削除する
+ * @param key:削除したい値
+ * @return 0:削除できなかった
+ *         1:削除
+ */
 int delete (int key)
 {
     struct node *p;
     struct node *temp;
+    //リストの最後までfor文を回す
     for (p = head->next; p != NULL; p = p->next)
     {
         if (p->next != NULL && key == p->next->key)
-        {
+        {//pの次のノードがkeyと同じ値であった場合
+            //削除したいノードの次のノードのアドレスを一時変数に記憶させておく
             temp = p->next->next;
+            //keyと同じ値を持つノードのメモリを開放
             free(p->next);
+            //pのnextに削除したノードの次のノードのアドレスを格納
             p->next = temp;
-            printf("hit and delete\n");
+            //削除したので1を返す
             return 1;
         }
     }
-    printf("no hit\n");
+    //keyと同じ値がなければ0を返す
     return 0;
 }
-void oddeven(struct node *nodehead, struct node *oddhead, struct node *evenhead)
+/**
+ * @brief 与えられたリストについてkeyが偶数なら偶数リストへ奇数なら奇数リストに分割する
+ * @param *head:分割したいリストの先頭のアドレス
+ *        *oddhead:奇数リストの先頭のアドレス
+ *        *evenhead:偶数リストの先頭のアドレス
+ */
+void oddeven(struct node *head, struct node *oddhead, struct node *evenhead)
 {
-    printf("%s\n", __func__);
+    //操作用の変数を作成
     struct node *oddlist = oddhead, *evenlist = evenhead, *p;
-    for (p = nodehead->next; p != NULL; p = p->next)
+    //headの最後までfor文を回す
+    for (p = head->next; p != NULL; p = p->next)
     {
         //遇奇判定
-        if ((p->key) % 2 == 0)
+        if ((p->key) % 2 != 0)
         {
+            //奇数の場合奇数リストにpのアドレスを追加する
             oddlist->next = p;
+            //oddlistが指す場所を更新
             oddlist = oddlist->next;
         }
         else
         {
+            //動作は奇数と同様
             evenlist->next = p;
             evenlist = evenlist->next;
         }
     }
+    //リストの最後にNULLを追加して終了
     oddlist->next = NULL;
     evenlist->next = NULL;
 }
