@@ -1,0 +1,41 @@
+\documentclass[titlepage]{jarticle}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{fancybox}
+\setlength{\textwidth}{46zw}
+\setlength{\oddsidemargin}{0cm}
+\usepackage{amsmath}
+\usepackage{ascmac}
+\usepackage{here}
+\usepackage{txfonts}
+\usepackage{fancyvrb}
+
+\title{数値解析レポートNo.1}
+\author{電子制御4年32番　奈良貴明}
+\begin{document}
+% \maketitle
+\section*{課題2b:リストの基本操作}
+
+それまでに探索された整数すべてを小さい順に並べた整数列を配列に格納しておき，ある整数値keyを引数として呼び出されたら，
+keyが探索されたことがなければ0(Noの意味)を返すとともに引数を小さい順に並ぶように指数列配列に格納し，keyが既に探索したことがあれば1(yesの意味)を返すだけのという，
+関数(int insert\_sorted\_list())を作れ． 
+
+以下に今回作成したinset\_sorted\_list関数とそれを構成する関数群を示す．
+\VerbatimInput[label={関数saw}]{insert_sorted_list.c}
+
+メールに添付したソースコードを実行すると以下のような出力を得られる．
+\VerbatimInput[label={output}]{output.txt}
+今回作成した関数では，引数keyが与えられてinsert\_sorted\_listが呼び出されたら，配列の中身を探索し，
+keyと同じ要素が存在した場合，配列を昇順にソートするasc\_sort\_array関数を呼びだし配列をソートした後，
+既に探索したことを示すYesを表示し，配列の中身を表示する関数print\_arrayを呼びだし1をreturnしている．
+一方，配列の中身にkeyと同じ要素がなかった場合，配列のまだ代入されていない位置にkeyの値を代入し，
+配列に代入された要素数を示すグローバル変数ARRAYENDをインクリメントする．
+その後，ソートを行い，探索していないことを示すNoを，表示し，配列の中身を表示して0をreturnしている．
+\section*{考察感想}
+配列を用いる場合では，配列を宣言し初期化したあと，要素を代入していったときに，どこまで代入したのかを判別する変数(自分のプログラムだとARRAYEND)を用いる必要があったので不便に感じた．
+また，ソートを毎回行っているのでソートされている配列とわかっている場合ならば，間に挿入できるリスト構造のほうが明らかに効率的であると考える．
+
+今回のプログラムではソートの部分は重要ではないと考えたので最適化高速化等は行っていない．
+
+\section*{協力者}
+19257504:太田那菜
+\end{document}
