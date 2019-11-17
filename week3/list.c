@@ -5,7 +5,6 @@ struct node head0;
 struct node *head;
 void list_initialize(void)
 {
-    printf("%s\n", __func__);
     head = &head0;
     head->next = NULL;
 }
@@ -104,7 +103,7 @@ int delete (int key)
     for (p = head->next; p != NULL; p = p->next)
     {
         if (p->next != NULL && key == p->next->key)
-        {//pの次のノードがkeyと同じ値であった場合
+        { //pの次のノードがkeyと同じ値であった場合
             //削除したいノードの次のノードのアドレスを一時変数に記憶させておく
             temp = p->next->next;
             //keyと同じ値を持つノードのメモリを開放
