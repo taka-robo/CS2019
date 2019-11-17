@@ -84,5 +84,7 @@ OUTPUT report.dvi
 INPUT output.txt
 INPUT delete_all.c
 INPUT delete.c
+INPUT output2.txt
 INPUT oddeven.c
+INPUT output3.txt
 INPUT report.aux

@@ -28,11 +28,11 @@ int main(void)
         }
         print_whole_list(head);
     }
-    delete (12);
+    delete (5);
     print_whole_list(head);
-    // oddeven(head, &oddhead, &evenhead);
-    // print_whole_list(head);
-    // print_whole_list(&oddhead);
-    // print_whole_list(&evenhead);
+    oddeven(head, &oddhead, &evenhead);
+    print_whole_list(head);
+    print_whole_list(&oddhead);
+    print_whole_list(&evenhead);
     return 0;
 }
