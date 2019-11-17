@@ -60,12 +60,14 @@ int insert_sorted_list(int key)
 }
 void delete_all(void)
 {
+    printf("%s\n", __func__);
     struct node *p;
     struct node *temp;
-    for (p = head->next; p != NULL; p = p->next)
+    for (p = head->next; p != NULL; p = temp)
     {
         temp = p->next;
-        free()
+        free(head->next);
+        head->next = temp;
     }
 }
 int main(void)
@@ -85,5 +87,8 @@ int main(void)
         }
         print_whole_list();
     }
+
+    delete_all();
+    print_whole_list();
     return 0;
 }
