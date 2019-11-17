@@ -1,3 +1,9 @@
+/**
+ * @file cs2-bc.c
+ * @brief 計算基礎工学の課題2b:リストの基本操作
+ * @author Takaaki NARA
+ * @date 11/18
+ */
 #include "stdio.h"
 #include "stdlib.h"
 #include "list.h"
@@ -22,7 +28,7 @@ int main(void)
         }
         print_whole_list(head);
     }
-    delete (11);
+    delete (12);
     print_whole_list(head);
     // oddeven(head, &oddhead, &evenhead);
     // print_whole_list(head);

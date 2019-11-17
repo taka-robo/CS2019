@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.26)  18 NOV 2019 00:49
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.26)  18 NOV 2019 00:34
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/home/taka/Documents/cs2019/week3/report2/report.tex
-(/home/taka/Documents/cs2019/week3/report2/report.tex
+**/home/taka/Documents/cs2019/week3/report1/report.tex
+(/home/taka/Documents/cs2019/week3/report1/report.tex
 LaTeX2e <2017-04-15>
 Babel <3.18> and hyphenation patterns for 84 language(s) loaded.
 (/usr/share/texlive/texmf-dist/tex/platex/base/jarticle.cls
@@ -55,7 +55,7 @@ Style option: `fancybox' v1.4 <2010/05/15> (tvz)
 \Verbatim@Outfile=\write3
 \Verbatim@Infile=\read1
 )
-/home/taka/Documents/cs2019/week3/report2/report.tex:4: Illegal unit of measure (pt inserted).
+/home/taka/Documents/cs2019/week3/report1/report.tex:4: Illegal unit of measure (pt inserted).
 <to be read again> 
                    z
 l.4 \setlength{\textwidth}{46zw}
@@ -68,7 +68,7 @@ delete the erroneous units; e.g., type `2' to delete
 two letters. (See Chapter 27 of The TeXbook.)
 
 
-/home/taka/Documents/cs2019/week3/report2/report.tex:4: LaTeX Error: Missing \begin{document}.
+/home/taka/Documents/cs2019/week3/report1/report.tex:4: LaTeX Error: Missing \begin{document}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
@@ -249,7 +249,7 @@ Package: fancyvrb 2008/02/07
 \c@FancyVerbLine=\count94
 \FV@StepNumber=\count95
 \FV@OutFile=\write4
-) (/home/taka/Documents/cs2019/week3/report2/report.aux)
+) (/home/taka/Documents/cs2019/week3/report1/report.aux)
 \openout1 = `report.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/txmi/m/it on input line 14.
@@ -282,7 +282,7 @@ File: utxexa.fd 2000/12/15 v3.1
 LaTeX Font Info:    ... okay on input line 14.
 
 
-/home/taka/Documents/cs2019/week3/report2/report.tex:14: LaTeX Error: The font size command \normalsize is not defined:
+/home/taka/Documents/cs2019/week3/report1/report.tex:14: LaTeX Error: The font size command \normalsize is not defined:
                there is probably something wrong with the class file.
 
 See the LaTeX manual or LaTeX Companion for explanation.
@@ -295,9 +295,9 @@ Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
-/home/taka/Documents/cs2019/week3/report2/report.tex:16: Undefined control sequence.
+/home/taka/Documents/cs2019/week3/report1/report.tex:16: Undefined control sequence.
 l.16 \section
-             *{Ë™≤È°å2b:„É™„Çπ„Éà„ÅÆÂü∫Êú¨Êìç‰Ωú}
+             *{Ë™≤È°å2a:ÈÖçÂàó„ÇíÁî®„ÅÑ„ÅüÊï¥ÂàóÊåøÂÖ•}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
@@ -312,33 +312,39 @@ Missing character: There is no È in font nullfont!
 Missing character: There is no ° in font nullfont!
 Missing character: There is no å in font nullfont!
 Missing character: There is no 2 in font nullfont!
-Missing character: There is no b in font nullfont!
+Missing character: There is no a in font nullfont!
 Missing character: There is no : in font nullfont!
-Missing character: There is no „ in font nullfont!
-Missing character: There is no É in font nullfont!
-Missing character: There is no ™ in font nullfont!
+Missing character: There is no È in font nullfont!
+Missing character: There is no Ö in font nullfont!
+Missing character: There is no ç in font nullfont!
+Missing character: There is no Â in font nullfont!
+Missing character: There is no à in font nullfont!
+Missing character: There is no ó in font nullfont!
 Missing character: There is no „ in font nullfont!
 Missing character: There is no Ç in font nullfont!
-Missing character: There is no π in font nullfont!
-Missing character: There is no „ in font nullfont!
-Missing character: There is no É in font nullfont!
-Missing character: There is no à in font nullfont!
+Missing character: There is no í in font nullfont!
+Missing character: There is no Á in font nullfont!
+Missing character: There is no î in font nullfont!
+Missing character: There is no ® in font nullfont!
 Missing character: There is no „ in font nullfont!
 Missing character: There is no Å in font nullfont!
-Missing character: There is no Æ in font nullfont!
-Missing character: There is no Â in font nullfont!
+Missing character: There is no Ñ in font nullfont!
+Missing character: There is no „ in font nullfont!
+Missing character: There is no Å in font nullfont!
 Missing character: There is no ü in font nullfont!
-Missing character: There is no ∫ in font nullfont!
 Missing character: There is no Ê in font nullfont!
-Missing character: There is no ú in font nullfont!
-Missing character: There is no ¨ in font nullfont!
+Missing character: There is no ï in font nullfont!
+Missing character: There is no ¥ in font nullfont!
+Missing character: There is no Â in font nullfont!
+Missing character: There is no à in font nullfont!
+Missing character: There is no ó in font nullfont!
 Missing character: There is no Ê in font nullfont!
-Missing character: There is no ì in font nullfont!
-Missing character: There is no ç in font nullfont!
-Missing character: There is no ‰ in font nullfont!
-Missing character: There is no Ω in font nullfont!
-Missing character: There is no ú in font nullfont!
-/home/taka/Documents/cs2019/week3/report2/report.tex:17: Undefined control sequence.
+Missing character: There is no å in font nullfont!
+Missing character: There is no ø in font nullfont!
+Missing character: There is no Â in font nullfont!
+Missing character: There is no Ö in font nullfont!
+Missing character: There is no • in font nullfont!
+/home/taka/Documents/cs2019/week3/report1/report.tex:17: Undefined control sequence.
 l.17 \subsection
                 *{1Êï¥ÂàóÊåøÂÖ•}
 The control sequence at the end of the top line
@@ -1740,7 +1746,7 @@ LaTeX Font Info:    Try loading font information for OT1+txr on input line 27.
 File: ot1txr.fd 2000/12/15 v3.1
 )
 
-/home/taka/Documents/cs2019/week3/report2/report.tex:27: LaTeX Error: The font size command \normalsize is not defined:
+/home/taka/Documents/cs2019/week3/report1/report.tex:27: LaTeX Error: The font size command \normalsize is not defined:
                there is probably something wrong with the class file.
 
 See the LaTeX manual or LaTeX Companion for explanation.
@@ -2552,7 +2558,7 @@ Missing character: There is no Ô in font nullfont!
 Missing character: There is no º in font nullfont!
 Missing character: There is no é in font nullfont!
 
-/home/taka/Documents/cs2019/week3/report2/report.tex:34: Undefined control sequence.
+/home/taka/Documents/cs2019/week3/report1/report.tex:34: Undefined control sequence.
 l.34 \subsection
                 *{2ÂÖ®ÂâäÈô§}
 The control sequence at the end of the top line
@@ -2572,7 +2578,7 @@ Missing character: There is no ä in font nullfont!
 Missing character: There is no È in font nullfont!
 Missing character: There is no ô in font nullfont!
 Missing character: There is no § in font nullfont!
-/home/taka/Documents/cs2019/week3/report2/report.tex:35: Undefined control sequence.
+/home/taka/Documents/cs2019/week3/report1/report.tex:35: Undefined control sequence.
 l.35 \subsection
                 *{3ÊåáÂÆö„Åï„Çå„Åü„Ç≠„Éº„ÅÆ„ÅÇ„Çã„Éé„Éº„Éâ„ÅÆÂâäÈô§}
 The control sequence at the end of the top line
@@ -2631,7 +2637,7 @@ Missing character: There is no ä in font nullfont!
 Missing character: There is no È in font nullfont!
 Missing character: There is no ô in font nullfont!
 Missing character: There is no § in font nullfont!
-/home/taka/Documents/cs2019/week3/report2/report.tex:36: Undefined control sequence.
+/home/taka/Documents/cs2019/week3/report1/report.tex:36: Undefined control sequence.
 l.36 \subsection
                 *{4„É™„Çπ„Éà„ÅÆÂàÜÂâ≤}
 The control sequence at the end of the top line
@@ -2660,7 +2666,7 @@ Missing character: There is no Ü in font nullfont!
 Missing character: There is no Â in font nullfont!
 Missing character: There is no â in font nullfont!
 Missing character: There is no ≤ in font nullfont!
-/home/taka/Documents/cs2019/week3/report2/report.tex:37: Undefined control sequence.
+/home/taka/Documents/cs2019/week3/report1/report.tex:37: Undefined control sequence.
 l.37 \section
              *{ËÄÉÂØüÊÑüÊÉ≥}
 The control sequence at the end of the top line
@@ -3289,7 +3295,7 @@ Missing character: There is no Ñ in font nullfont!
 Missing character: There is no Ô in font nullfont!
 Missing character: There is no º in font nullfont!
 Missing character: There is no é in font nullfont!
-/home/taka/Documents/cs2019/week3/report2/report.tex:43: Undefined control sequence.
+/home/taka/Documents/cs2019/week3/report1/report.tex:43: Undefined control sequence.
 l.43 \section
              *{ÂçîÂäõËÄÖ}
 The control sequence at the end of the top line
@@ -3330,7 +3336,7 @@ Missing character: There is no Ë in font nullfont!
 Missing character: There is no è in font nullfont!
 Missing character: There is no ú in font nullfont!
 
-/home/taka/Documents/cs2019/week3/report2/report.tex:45: LaTeX Error: The font size command \normalsize is not defined:
+/home/taka/Documents/cs2019/week3/report1/report.tex:45: LaTeX Error: The font size command \normalsize is not defined:
                there is probably something wrong with the class file.
 
 See the LaTeX manual or LaTeX Companion for explanation.
@@ -3343,7 +3349,7 @@ Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
-[2] (/home/taka/Documents/cs2019/week3/report2/report.aux) ) 
+[2] (/home/taka/Documents/cs2019/week3/report1/report.aux) ) 
 Here is how much of TeX's memory you used:
  2363 strings out of 492982
  29877 string characters out of 6134895
@@ -3353,7 +3359,7 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  27i,4n,22p,320b,301s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/txfonts/txtt.pfb>
-Output written on /home/taka/Documents/cs2019/week3/report2/report.pdf (2 pages, 10410 bytes).
+Output written on /home/taka/Documents/cs2019/week3/report1/report.pdf (2 pages, 10410 bytes).
 PDF statistics:
  15 PDF objects out of 1000 (max. 8388607)
  9 compressed objects within 1 object stream

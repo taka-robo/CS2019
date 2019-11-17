@@ -1,8 +1,8 @@
 # Fdb version 3
-["pdflatex"] 1574005794 "/home/taka/Documents/cs2019/week3/report2/report.tex" "/home/taka/Documents/cs2019/week3/report2/report.pdf" "report" 1574005794
+["pdflatex"] 1574004848 "/home/taka/Documents/cs2019/week3/report1/report.tex" "/home/taka/Documents/cs2019/week3/report1/report.pdf" "report" 1574004848
   "/etc/texmf/web2c/texmf.cnf" 1572022881 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/taka/Documents/cs2019/week3/report2/report.aux" 1574005794 8 a94a2480d3289e625eea47cd1b285758 ""
-  "/home/taka/Documents/cs2019/week3/report2/report.tex" 1574005794 2796 ae6bd8096f91fb137255e1ec043c8486 ""
+  "/home/taka/Documents/cs2019/week3/report1/report.aux" 1574004848 8 a94a2480d3289e625eea47cd1b285758 ""
+  "/home/taka/Documents/cs2019/week3/report1/report.tex" 1574004847 2802 be6b33b2cf2a84d22f8ddf4f274a13d4 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/ptex-fonts/ascgrp/ascgrp.tfm" 1480098698 448 9a1f3a95c3a7e2681aa6eefcf410b7ac ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/txfonts/txr.tfm" 1480098718 2408 aec793a3c45e495f7ad15b227c91f508 ""
@@ -37,13 +37,13 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1520210507 32485 c64754543d8ac501bea6e75e209ea521 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1572100779 2700761 ac0584cc9514ab21918550a6948c4ee2 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1572100802 4126571 45384d93c405ce6a2b7aa3c8284b50ee ""
-  "insert_sorted_list.c" 1574004502 1960 8f5bad22ba2df9a55beda900849b16c4 ""
-  "output.txt" 1574004502 276 5a7f0e489bf00eafd9b009baa64dcdde ""
+  "insert_sorted_list.c" 1573527598 1960 8f5bad22ba2df9a55beda900849b16c4 ""
+  "output.txt" 1573527598 276 5a7f0e489bf00eafd9b009baa64dcdde ""
   "report.aux" 0 -1 0 ""
-  "report.tex" 1574005794 2796 ae6bd8096f91fb137255e1ec043c8486 ""
+  "report.tex" 1574004847 2802 be6b33b2cf2a84d22f8ddf4f274a13d4 ""
   (generated)
-  "/home/taka/Documents/cs2019/week3/report2/report.log"
-  "/home/taka/Documents/cs2019/week3/report2/report.pdf"
-  "report.pdf"
-  "report.aux"
   "report.log"
+  "report.aux"
+  "/home/taka/Documents/cs2019/week3/report1/report.pdf"
+  "report.pdf"
+  "/home/taka/Documents/cs2019/week3/report1/report.log"

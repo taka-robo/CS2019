@@ -57,7 +57,7 @@ void asc_sort_array()
  */
 int insert_sorted_list(int key)
 {
-    printf("insert:%d\n",key);
+    printf("insert:%d\n", key);
     int i;
     /*配列の中にkeyと同じ要素がないか探索する*/
     for (i = 0; i < ARRAYEND; ++i)

@@ -9,6 +9,13 @@ void list_initialize(void)
     head = &head0;
     head->next = NULL;
 }
+/**
+ * @brief 指定したポインタの後ろにkeyの値を挿入 
+ * @param key:配列に格納したい変数
+ * @param pt:挿入したい位置の前のノードのポインタ
+ * @return 新しく挿入したノードのアドレス
+ * 　　
+ */
 struct node *insert_after(int key, struct node *pt) //挿入したいkeyの値と次に挿入したい場所のポイン
 {
     struct node *new_node;                              //挿入されるキーを格納するノードへのポインタ
@@ -41,6 +48,12 @@ void print_whole_list(struct node *pt)
     }
     printf("\n");
 }
+/**
+ * @brief 配列の中にkeyと同値が存在するか探索し存在しなければ昇順の適切な位置に挿入する．
+ * @param key:配列に格納したい変数
+ * @return 配列に既にkeyが存在すれば1(Yesの意味)
+ * 　　　　 存在しなければ0(Noの意味)
+ */
 int insert_sorted_list(int key)
 {
     struct node *p;
