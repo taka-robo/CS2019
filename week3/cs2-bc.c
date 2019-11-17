@@ -70,6 +70,24 @@ void delete_all(void)
         head->next = temp;
     }
 }
+int delete (int key)
+{
+    struct node *p;
+    struct node *temp;
+    for (p = head->next; p != NULL; p = p->next)
+    {
+        if (key == p->next->key)
+        {
+            temp = p->next->next;
+            free(p->next);
+            p->next = temp;
+            printf("hit and delete\n");
+            return 1;
+        }
+    }
+    printf("no hit\n");
+    return 0;
+}
 int main(void)
 {
     int i;
@@ -88,7 +106,7 @@ int main(void)
         print_whole_list();
     }
 
-    delete_all();
+    delete (10);
     print_whole_list();
     return 0;
 }
