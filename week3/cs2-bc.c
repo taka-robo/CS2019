@@ -44,19 +44,29 @@ void print_whole_list(void)
     }
     printf("\n");
 }
-int insert_sorted_list(int num)
+int insert_sorted_list(int key)
 {
     struct node *p;
     struct node *insert_pt = head;
-    for (p = head->next; p != NULL && p->key <= num; insert_pt = p, p = p->next)
+    for (p = head->next; p != NULL && p->key <= key; insert_pt = p, p = p->next)
     {
-        if (num == p->key)
+        if (key == p->key)
         {
             return 1;
         }
     }
-    insert_after(num, insert_pt);
+    insert_after(key, insert_pt);
     return 0;
+}
+void delete_all(void)
+{
+    struct node *p;
+    struct node *temp;
+    for (p = head->next; p != NULL; p = p->next)
+    {
+        temp = p->next;
+        free()
+    }
 }
 int main(void)
 {
