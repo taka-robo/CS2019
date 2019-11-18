@@ -1,5 +1,5 @@
-cs2-bc.out: cs2-bc.o list.o  
-	gcc -o cs2-bc.out cs2-bc.o list.o 
+cs2-c: cs2-c.o list.o  
+	gcc -o cs2-c cs2-c.o list.o 
 .c.o :
 	gcc -c $<
 clean:

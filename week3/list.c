@@ -71,6 +71,25 @@ int insert_sorted_list(int key)
     return 0;
 }
 /**
+ * @brief 配列の中にkeyと同値が存在するか探索し存在しなければ昇順の適切な位置に挿入する．
+ * @param key:配列に格納したい変数
+ * @return 配列に既にkeyが存在すれば1(Yesの意味)
+ * 　　　　 存在しなければ0(Noの意味)
+ */
+int insert_sorted_list2(struct node *pt, int key)
+{
+    struct node *insert_pt = pt;
+    for (pt = pt->next; pt != NULL && pt->key <= key; insert_pt = pt, pt = pt->next)
+    {
+        if (key == pt->key)
+        {
+            return 1;
+        }
+    }
+    insert_after(key, insert_pt);
+    return 0;
+}
+/**
  * @brief listの全ノードを削除する
  * @return なし
  */
@@ -100,7 +119,35 @@ int delete (int key)
     struct node *p;
     struct node *temp;
     //リストの最後までfor文を回す
-    for (p = head->next; p != NULL; p = p->next)
+    for (p = head; p != NULL; p = p->next)
+    {
+        if (p->next != NULL && key == p->next->key)
+        { //pの次のノードがkeyと同じ値であった場合
+            //削除したいノードの次のノードのアドレスを一時変数に記憶させておく
+            temp = p->next->next;
+            //keyと同じ値を持つノードのメモリを開放
+            free(p->next);
+            //pのnextに削除したノードの次のノードのアドレスを格納
+            p->next = temp;
+            //削除したので1を返す
+            return 1;
+        }
+    }
+    //keyと同じ値がなければ0を返す
+    return 0;
+}
+/**
+ * @brief 指定されたkeyを持つノードを削除する
+ * @param p:削除したいリストの先頭のアドレス
+ * @param key:削除したい値
+ * @return 0:削除できなかった
+ *         1:削除
+ */
+int delete2(struct node *p, int key)
+{
+    struct node *temp;
+    //リストの最後までfor文を回す
+    for (; p != NULL; p = p->next)
     {
         if (p->next != NULL && key == p->next->key)
         { //pの次のノードがkeyと同じ値であった場合
@@ -148,4 +195,35 @@ void oddeven(struct node *head, struct node *oddhead, struct node *evenhead)
     //リストの最後にNULLを追加して終了
     oddlist->next = NULL;
     evenlist->next = NULL;
+}
+struct node *merge(struct node *head1, struct node *head2)
+{
+    struct node merge0;
+    struct node *merge = &merge0;
+    merge->next = NULL;
+    struct node *i = head1->next, *j = head2->next, *p = merge, *temp;
+    for (i = head1->next; i != NULL; i = temp)
+    {
+        for (j = head2->next; j != NULL; j = temp)
+        {
+            temp = j->next;
+            if (i->key > j->key)
+            {
+                p->next = j;
+                p = p->next;
+                head2->next = temp;
+            }
+            else if (i->key == j->key)
+            {
+                delete2(head2, j->key);
+            }
+        }
+        temp = i->next;
+        p->next = i;
+        p = p->next;
+        head1->next = temp;
+    }
+    p->next = head2->next;
+    head2->next = NULL;
+    return merge;
 }

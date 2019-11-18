@@ -17,7 +17,10 @@ struct node *insert_after(int key, struct node *pt);
 void print_list(struct node *pt);
 void print_whole_list(struct node *pt);
 int insert_sorted_list(int key);
+int insert_sorted_list2(struct node *pt, int key);
 void delete_all(void);
 int delete (int key);
-void oddeven(struct node *nodehead, struct node *oddhead, struct node *evenhead);
+int delete2(struct node *p, int key);
+void oddeven(struct node *head, struct node *oddhead, struct node *evenhead);
+struct node *merge(struct node *head1, struct node *head2);
 #endif
