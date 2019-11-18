@@ -1,0 +1,65 @@
+\documentclass[titlepage]{jarticle}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{fancybox}
+\setlength{\textwidth}{46zw}
+\setlength{\oddsidemargin}{0cm}
+\usepackage{amsmath}
+\usepackage{ascmac}
+\usepackage{here}
+\usepackage{txfonts}
+\usepackage{fancyvrb}
+
+\title{計算工学基礎レポート}
+\author{}
+\begin{document}
+% \maketitle
+\section*{課題2c:リストの基本操作}
+\subsection*{}
+
+それまでに探索された整数すべてを小さい順に並べた整数列を配列に格納しておき，ある整数値keyを引数として呼び出されたら，
+keyが探索されたことがなければ0(Noの意味)を返すとともに引数を小さい順に並ぶように指数列配列に格納し，keyが既に探索したことがあれば1(yesの意味)を返すだけのという，
+関数(int insert\_sorted\_list())を作れ． 
+
+以下にlist構造を用いて作成したinset\_sorted\_list関数とそれを構成する関数群を示す．
+\VerbatimInput[label={関数saw}]{insert_sorted_list.c}
+
+メールに添付したソースコードを実行すると以下のような出力を得られる．
+\VerbatimInput[label={output}]{output.txt}
+このinset\_sorted\_list関数は,変数pがNULLになるか，
+pのkeyの値が引数keyより大きくなるまでfor分を回している．
+もし，listの中に引数keyと同値の数があれば1をreturnする．
+変数insert\_ptは関数insert\_afterを用いるための変数であり，
+for文を抜けたときのpのアドレスの一個前のnodeのアドレスが格納されている．
+\subsection*{2全削除}
+全削除関数(void delete\_all(void))をつくれ
+
+以下に今回作成したdelete\_all関数を示す.
+\VerbatimInput[label={delete_all}]{delete_all.c}
+現在は特定のリストしかdeleteできないので，実用上はリストの先頭のアドレスを渡すほうがいいと思った．
+\subsection*{3指定されたキーのあるノードの削除}
+keyの値により指定されたノードの削除関数(int delete(int key))を作れ．返り値は，削除したなら1，削除できなかったなら0とする．
+ただし，リストは整列されていなく，keyの重複はないものとする．
+
+以下に作成したdelete関数を示す．
+\VerbatimInput[label={delete}]{delete.c}
+実行結果を以下に示す．
+\VerbatimInput[label={output2}]{output2.txt}
+今回は5を指定した．
+指定されたノードがリストから削除されていることがわかる
+\subsection*{4リストの分割}
+与えられたリストについて，keyの値が奇数であるリストと偶数であるリストの2つに分割する関数
+void oddeven(struct node *head, struct node *oddhead, struct node *evenhead)
+\\を作れ．
+
+以下に作成したoddeven関数を示す．
+\VerbatimInput[label={oddeven}]{oddeven.c}
+実行結果を以下に示す．
+\VerbatimInput[label={output3}]{output3.txt}
+与えたリストが奇数と偶数のリストに分けられていることが確認できる．
+\section*{考察感想}
+リスト構造を使った場合，配列よりも自由度が高い実装ができるので便利だと感じた，
+一方で今回は単方向リストだったので先頭からしか探索できないなどの制約があったので双方向リストも試して見たいと思った．
+また，動作の説明が文章だけだとわかりにくいので最初から出力結果の例みたいなのをもっと示してほしいと思った．
+\section*{協力者}
+19257504:太田那菜
+\end{document}
