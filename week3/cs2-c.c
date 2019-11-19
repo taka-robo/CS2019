@@ -2,7 +2,7 @@
  * @file cs2-c.c
  * @brief 計算基礎工学の課題2b:リストの基本操作
  * @author Takaaki NARA
- * @date 11/18
+ * @date 11/19
  */
 //標準入出力ライブラリ
 #include "stdio.h"
@@ -22,31 +22,39 @@ int main(void)
     head1->next = NULL;  //末尾をNULLで初期化
     head2->next = NULL;  //末尾をNULLで初期化
     head3->next = NULL;  //末尾をNULLで初期化
+    //index1の要素をlist1に追加
     temp = head1;
     for (i = 0; i < 9; i++)
     {
         temp = insert_after(index1[i], temp);
     }
+    //index2の要素をlist2に追加
     temp = head2;
     for (i = 0; i < 10; i++)
     {
         temp = insert_after(index2[i], temp);
     }
+    //index3の要素をlist3に追加
     temp = head3;
     for (i = 0; i < 12; i++)
     {
-        result = insert_after(index3[i], temp);
+        temp = insert_after(index3[i], temp);
     }
     printf("merge input list\n");
+    //list1の内容を表示
     print_whole_list(head1);
+    //list2の内容を表示
     print_whole_list(head2);
     result = merge(head2, head1);
     printf("merge result ");
+    //マージ後のresultの内容を表示
     print_whole_list(result);
     printf("natural sort input list\n");
+    //list3の内容を表示
     print_whole_list(head3);
     naturalsort(head3);
     printf("natural sort result ");
+    //ソート後のlist3の内容を表示
     print_whole_list(head3);
     return 0;
 }

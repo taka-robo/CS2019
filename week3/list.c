@@ -108,12 +108,6 @@ void delete_all(struct node *head)
         head->next = temp;
     }
 }
-/**
- * @brief 指定されたkeyを持つノードを削除する
- * @param key:削除したい値
- * @return 0:削除できなかった
- *         1:削除
- */
 // int delete (int key)
 // {
 //     struct node *p;
@@ -196,11 +190,19 @@ void oddeven(struct node *head, struct node *oddhead, struct node *evenhead)
     oddlist->next = NULL;
     evenlist->next = NULL;
 }
+/**
+ * @brief 与えられた2つの昇順リストを1つの昇順リストにマージする
+ * @param *head1:昇順リスト1
+ * @param *head2:昇順リスト2
+ * @return マージしたリストの先頭のアドレス
+ */
 struct node *merge(struct node *head1, struct node *head2)
 {
-    printf("%s\n", __func__);
+    //マージ後のリストの先頭のノード
     static struct node merge0;
+    //マージ後のリストの先頭のノードのアドレス
     struct node *merge = &merge0;
+    //リストの末尾をNULLで初期化
     merge->next = NULL;
     struct node *i = head1->next, *j = head2->next, *p = merge, *temp;
     for (i = head1->next; i != NULL; i = temp)
@@ -208,24 +210,26 @@ struct node *merge(struct node *head1, struct node *head2)
         for (j = head2->next; j != NULL; j = temp)
         {
             temp = j->next;
+            //iのkeyよりも小さいkeyをhead2から探す
             if (i->key > j->key)
             {
+                //存在した場合mergelistの末尾にjを追加
                 p->next = j;
+                //mergeが参照しているところを一個すすめる
                 p = p->next;
                 head2->next = temp;
             }
-            // else if (i->key == j->key)
-            // {
-            //     delete2(head2, j->key);
-            // }
         }
         temp = i->next;
         p->next = i;
         p = p->next;
         head1->next = temp;
     }
+    //head2にはhead1より小さい要素はもう存在しないのでmergeの後ろにhead2を追加する
     p->next = head2->next;
+    //head2の末尾をNULLで再初期化しておく
     head2->next = NULL;
+    //結果のリストの先頭のアドレスを返す　
     return merge;
 }
 void naturalsort(struct node *head)
@@ -245,16 +249,15 @@ void naturalsort(struct node *head)
         //昇順になっていないところを探索
         if (p->next != NULL && p->key > p->next->key)
         {
-            //一回目の区切り,リスト1を確定　
-            if (NULL == head2->next)
+            if (NULL == head2->next) //一回目の区切り,リスト1を確定　
             {
                 head2->next = p->next;
                 //sorted_list1の末尾をNULLに
                 p->next = NULL;
                 //探査をhead2からに変更
                 p = head2;
-            } //二回目の区切り
-            else if (NULL != head2->next)
+            }
+            else if (NULL != head2->next) //二回目の区切り
             {
                 //昇順になっていないリストの先頭のアドレスであるheadのnextをpのnextに
                 head->next = p->next;
@@ -275,8 +278,15 @@ void naturalsort(struct node *head)
     }
     //headを2つにしか分割できなかった場合あと一回マージすれば昇順になる
     temp = merge(head1, head2);
+    //マージ結果をheadの末尾にマージ(昇順になった)
     merge_end(head, temp);
 }
+/**
+ * @brief 与えられた2つの昇順リストを1つの昇順リストにマージする
+ * @param *head1:昇順リスト1
+ * @param *head2:昇順リスト2
+ * @return マージしたリストの先頭のアドレス
+ */
 void merge_end(struct node *head1, struct node *head2)
 {
     struct node *p;

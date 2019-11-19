@@ -3,11 +3,11 @@
     "configurations": [
         {
             "name": "(gdb) Launch",
-            "type": "",
+            "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceRoot}/week3/cs2-bc.out",
+            "program": "${workspaceRoot}/week3/cs2-c",
             "args": [],
-            "stopAtEntry": false,
+            "stopAtEntry": true,
             "cwd": "${workspaceFolder}",
             "MIMode": "gdb",
             "miDebuggerPath": "/usr/bin/gdb",
