@@ -1,13 +1,13 @@
 #include "stdio.h"
 #include "list.h"
 
-struct node head0;
-struct node *head;
-void list_initialize(void)
-{
-    head = &head0;
-    head->next = NULL;
-}
+// struct node head0;
+// struct node *head;
+// void list_initialize(void)
+// {
+//     head = &head0;
+//     head->next = NULL;
+// }
 /**
  * @brief 指定したポインタの後ろにkeyの値を挿入 
  * @param key:配列に格納したい変数
@@ -56,7 +56,7 @@ void print_whole_list(struct node *pt)
  * @return 配列に既にkeyが存在すれば1(Yesの意味)
  * 　　　　 存在しなければ0(Noの意味)
  */
-int insert_sorted_list(int key)
+int insert_sorted_list(struct node *head, int key)
 {
     struct node *p;
     struct node *insert_pt = head;
@@ -93,7 +93,7 @@ int insert_sorted_list2(struct node *pt, int key)
  * @brief listの全ノードを削除する
  * @return なし
  */
-void delete_all(void)
+void delete_all(struct node *head)
 {
     struct node *p;
     struct node *temp;
@@ -114,28 +114,28 @@ void delete_all(void)
  * @return 0:削除できなかった
  *         1:削除
  */
-int delete (int key)
-{
-    struct node *p;
-    struct node *temp;
-    //リストの最後までfor文を回す
-    for (p = head; p != NULL; p = p->next)
-    {
-        if (p->next != NULL && key == p->next->key)
-        { //pの次のノードがkeyと同じ値であった場合
-            //削除したいノードの次のノードのアドレスを一時変数に記憶させておく
-            temp = p->next->next;
-            //keyと同じ値を持つノードのメモリを開放
-            free(p->next);
-            //pのnextに削除したノードの次のノードのアドレスを格納
-            p->next = temp;
-            //削除したので1を返す
-            return 1;
-        }
-    }
-    //keyと同じ値がなければ0を返す
-    return 0;
-}
+// int delete (int key)
+// {
+//     struct node *p;
+//     struct node *temp;
+//     //リストの最後までfor文を回す
+//     for (p = head; p != NULL; p = p->next)
+//     {
+//         if (p->next != NULL && key == p->next->key)
+//         { //pの次のノードがkeyと同じ値であった場合
+//             //削除したいノードの次のノードのアドレスを一時変数に記憶させておく
+//             temp = p->next->next;
+//             //keyと同じ値を持つノードのメモリを開放
+//             free(p->next);
+//             //pのnextに削除したノードの次のノードのアドレスを格納
+//             p->next = temp;
+//             //削除したので1を返す
+//             return 1;
+//         }
+//     }
+//     //keyと同じ値がなければ0を返す
+//     return 0;
+// }
 /**
  * @brief 指定されたkeyを持つノードを削除する
  * @param p:削除したいリストの先頭のアドレス
@@ -198,7 +198,8 @@ void oddeven(struct node *head, struct node *oddhead, struct node *evenhead)
 }
 struct node *merge(struct node *head1, struct node *head2)
 {
-    struct node merge0;
+    printf("%s\n", __func__);
+    static struct node merge0;
     struct node *merge = &merge0;
     merge->next = NULL;
     struct node *i = head1->next, *j = head2->next, *p = merge, *temp;
@@ -213,10 +214,10 @@ struct node *merge(struct node *head1, struct node *head2)
                 p = p->next;
                 head2->next = temp;
             }
-            else if (i->key == j->key)
-            {
-                delete2(head2, j->key);
-            }
+            // else if (i->key == j->key)
+            // {
+            //     delete2(head2, j->key);
+            // }
         }
         temp = i->next;
         p->next = i;
@@ -226,4 +227,63 @@ struct node *merge(struct node *head1, struct node *head2)
     p->next = head2->next;
     head2->next = NULL;
     return merge;
+}
+void naturalsort(struct node *head)
+{
+    struct node sorted_list1, sorted_list2; //昇順部分リスト1,2
+    struct node *head1 = &sorted_list1, *head2 = &sorted_list2;
+    struct node *p, *temp; //for文処理用変数，一時退避用変数
+
+    //与えられたリストの先頭をhead1に置き換え
+    head1->next = head->next;
+    //head2のnextをNULLで初期化
+    head2->next = NULL;
+    //headのnextをNULLで再初期化
+    head->next = NULL;
+    for (p = head1->next; p != NULL; p = p->next)
+    {
+        //昇順になっていないところを探索
+        if (p->next != NULL && p->key > p->next->key)
+        {
+            //一回目の区切り,リスト1を確定　
+            if (NULL == head2->next)
+            {
+                head2->next = p->next;
+                //sorted_list1の末尾をNULLに
+                p->next = NULL;
+                //探査をhead2からに変更
+                p = head2;
+            } //二回目の区切り
+            else if (NULL != head2->next)
+            {
+                //昇順になっていないリストの先頭のアドレスであるheadのnextをpのnextに
+                head->next = p->next;
+                //sorted_list2の末尾をNULLにsorted_list2を確定
+                p->next = NULL;
+                //探索をheadに切り替える
+                p = head;
+                //部分リストが2つ確定したのでhead1とhead2をマージ
+                temp = merge(head1, head2);
+                //headの末尾にhead1とhead2をマージしたものをマージ
+                merge_end(head, temp);
+                //昇順になっていないので再帰呼び出し
+                naturalsort(head);
+                //再帰から抜けた場合昇順になっているので関数を終了
+                return;
+            }
+        }
+    }
+    //headを2つにしか分割できなかった場合あと一回マージすれば昇順になる
+    temp = merge(head1, head2);
+    merge_end(head, temp);
+}
+void merge_end(struct node *head1, struct node *head2)
+{
+    struct node *p;
+    for (p = head1; p->next != NULL; p = p->next)
+    {
+        //空の処理
+    }
+    //headの末尾にhead2をマージ
+    p->next = head2->next;
 }
