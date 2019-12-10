@@ -1,4 +1,4 @@
-#include "list.hpp"
+#include "list2.hpp"
 
 /**
  * @brief 指定したポインタの後ろにkeyの値を挿入 
@@ -7,7 +7,7 @@
  * @return 新しく挿入したノードのアドレス
  * 　　
  */
-struct node *insert_after(int key, struct node *pt) //挿入したいkeyの値と次に挿入したい場所のポイン
+struct node *insert_after(struct point point, struct node *pt) //挿入したいkeyの値と次に挿入したい場所のポイン
 {
     struct node *new_node;                              //挿入されるキーを格納するノードへのポインタ
     new_node = (struct node *)malloc(sizeof *new_node); //ノードの確保
@@ -16,10 +16,11 @@ struct node *insert_after(int key, struct node *pt) //挿入したいkeyの値�
         printf("Not enough memory\n");
         exit(1); //終了
     }
-    new_node->key = key;       //新しいノードのキーに値を格納
-    new_node->next = pt->next; //new_nodeのnextはptのnext
-    pt->next = new_node;       //ptのnextはnew_node
-    return new_node;           //new_nodeの先頭アドレスを返す
+    new_node->cell.x = point.x; //新しいノードのxに値を格納
+    new_node->cell.y = point.y; //新しいノードのyに値を格納
+    new_node->next = pt->next;  //new_nodeのnextはptのnext
+    pt->next = new_node;        //ptのnextはnew_node
+    return new_node;            //new_nodeの先頭アドレスを返す
 }
 /**
  * @brief 指定したリストの中身をすべて表示する
@@ -29,7 +30,7 @@ void print_whole_list(struct node *pt)
 {
     for (pt = pt->next; pt != NULL; pt = pt->next)
     {
-        printf("%d -> ", pt->key); //pのkeyを表示して
+        printf("%d,%d -> ", pt->cell.x, pt->cell.y); //pのkeyを表示して
     }
     printf("\n");
 }
@@ -52,8 +53,6 @@ void delete_all(struct node *head)
         head->next = temp;
     }
 }
-namespace stack
-{
 /**
  * @brief スタックリストの初期化
  * @param *head:スタックリストに使うリストの先頭のアドレス 
@@ -62,6 +61,7 @@ namespace stack
 void stackinit(struct node *head)
 {
     std::cout << __func__ << std::endl;
+    delete_all(head);
     head->next = NULL;
 }
 /**
@@ -70,16 +70,16 @@ void stackinit(struct node *head)
  * @param  num:スタックに入れたい整数 
  * @return なし
  */
-void push(struct node *head, int num)
+void push(struct node *head, struct point pt)
 {
-    std::cout << __func__ << ":" << num << "  ";
+    std::cout << __func__ << ":" << pt.x << "," << pt.y;
     struct node *p;
     for (p = head; p->next != NULL; p = p->next)
     {
         //リストの末尾までnextを辿っていく処理（効率が悪い）
     }
     //リストの末尾の次にnumを挿入
-    insert_after(num, p);
+    insert_after(pt, p);
     print_whole_list(head);
 }
 /**
@@ -87,12 +87,12 @@ void push(struct node *head, int num)
  * @param *head:スタックリストに使うリストの先頭のアドレス 
  * @return 取り出した整数
  */
-int pop(struct node *head)
+struct point pop(struct node *head)
 {
     std::cout << __func__;
-    int temp;
+    struct point temp;
     struct node *p;
-    if (stack::stackempty(head) == 0)
+    if (stackempty(head) == 0)
     {
         for (p = head; p->next->next != NULL; p = p->next)
         {
@@ -103,12 +103,11 @@ int pop(struct node *head)
     {
         std::cout << " stack is empty" << std::endl;
         //空のスタックからpopしようとしたのでプログラムを終了
-        //exit(1);
-        return 0;
+        exit(1);
     }
     //pの次の要素の値を取得し削除
     temp = delete_next(p);
-    std::cout << ":" << temp << "   ";
+    std::cout << ":" << temp.x << "," << temp.y << "   ";
     print_whole_list(head);
     return temp;
 }
@@ -132,9 +131,6 @@ int stackempty(struct node *head)
         return 1;
     }
 }
-} // namespace stack
-namespace queue
-{
 /**
  * @brief キューリストの初期化
  * @param *head:キューリストに使うリストの先頭のアドレス 
@@ -151,15 +147,19 @@ void queueinit(struct node *head)
  * @param  num:キューに入れたい整数 
  * @return なし
  */
-void put(struct node *head, int num)
+void put(struct node *head, int x, int y)
 {
-    std::cout << __func__ << ":" << num << "   ";
+    struct point pt;
+    pt.x = x;
+    pt.y = y;
+    std::cout << __func__ << ":" << x << "," << y << "   ";
     struct node *p;
     for (p = head; p->next != NULL; p = p->next)
     {
         //リストの末尾までnextを辿っていく処理（効率が悪い）
     }
-    insert_after(num, p);
+
+    insert_after(pt, p);
     print_whole_list(head);
 }
 /**
@@ -167,15 +167,15 @@ void put(struct node *head, int num)
  * @param *head:スタックリストに使うリストの先頭のアドレス 
  * @return 取り出した整数
  */
-int get(struct node *head)
+struct point get(struct node *head)
 {
     std::cout << __func__;
-    int temp;
-    if (queue::queueempty(head) == 0)
+    struct point temp;
+    if (queueempty(head) == 0)
     {
         //リストの一番先頭のノードのkeyを取得して先頭のノードを削除
         temp = delete_next(head);
-        std::cout << ":" << temp << "   ";
+        std::cout << ":" << temp.x << "," << temp.y << "   ";
         print_whole_list(head);
         return temp;
     }
@@ -183,8 +183,7 @@ int get(struct node *head)
     {
         std::cout << " queue is empty" << std::endl;
         //空のキューからゲットしようとしたのでプログラムを終了
-        //exit(1);
-        return 0;
+        exit(1);
     }
 }
 /**
@@ -207,22 +206,23 @@ int queueempty(struct node *head)
         return 1;
     }
 }
-} // namespace queue
 /**
  * @brief 指定場所の直後の要素のkeyを返すと共にその要素を削除する
  * @param *pt:keyを取得し消去したいノードの前のノードのアドレス 
  * @return　指定場所の直後のノードのkey
  */
-int delete_next(struct node *pt)
+struct point delete_next(struct node *pt)
 {
+    struct point point;
     //ptの次にノードがなければエラーとしてプログラムを終了
     if (NULL == pt->next)
     {
         std::cout << "delete_next error" << std::endl;
         exit(1);
     }
-    //指定箇所の次のノードのkeyを格納
-    int key = pt->next->key;
+    //指定箇所の次のノードのx,yを格納
+    point.x = pt->next->cell.x;
+    point.y = pt->next->cell.y;
     //指定箇所の次のノードの次のノードのアドレスを格納
     struct node *temp = pt->next->next;
     //指定箇所の次のノードのメモリを開放
@@ -230,5 +230,5 @@ int delete_next(struct node *pt)
     //指定箇所の次のノードを削除したノードの次のノードにつなぎ替える
     pt->next = temp;
     //削除したノードのkeyを返す
-    return key;
+    return point;
 }

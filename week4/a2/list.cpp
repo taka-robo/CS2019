@@ -52,8 +52,6 @@ void delete_all(struct node *head)
         head->next = temp;
     }
 }
-namespace stack
-{
 /**
  * @brief スタックリストの初期化
  * @param *head:スタックリストに使うリストの先頭のアドレス 
@@ -92,7 +90,7 @@ int pop(struct node *head)
     std::cout << __func__;
     int temp;
     struct node *p;
-    if (stack::stackempty(head) == 0)
+    if (stackempty(head) == 0)
     {
         for (p = head; p->next->next != NULL; p = p->next)
         {
@@ -132,9 +130,6 @@ int stackempty(struct node *head)
         return 1;
     }
 }
-} // namespace stack
-namespace queue
-{
 /**
  * @brief キューリストの初期化
  * @param *head:キューリストに使うリストの先頭のアドレス 
@@ -143,6 +138,7 @@ namespace queue
 void queueinit(struct node *head)
 {
     std::cout << __func__ << std::endl;
+    delete_all(head);
     head->next = NULL;
 }
 /**
@@ -171,7 +167,7 @@ int get(struct node *head)
 {
     std::cout << __func__;
     int temp;
-    if (queue::queueempty(head) == 0)
+    if (queueempty(head) == 0)
     {
         //リストの一番先頭のノードのkeyを取得して先頭のノードを削除
         temp = delete_next(head);
@@ -207,7 +203,6 @@ int queueempty(struct node *head)
         return 1;
     }
 }
-} // namespace queue
 /**
  * @brief 指定場所の直後の要素のkeyを返すと共にその要素を削除する
  * @param *pt:keyを取得し消去したいノードの前のノードのアドレス 
