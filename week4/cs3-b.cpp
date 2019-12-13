@@ -5,12 +5,19 @@
 #include "list2.hpp"
 #define MAX 50 //MAX×MAXの迷路を生成
 
+//経路探索につかうキュー
 node queuehead;
 node *qhead = &queuehead;
+//探索した最短経路を入れておくリスト
+node routehead;
+node *rhead = &routehead;
 int count = 1;
+//スタート座標
+struct point startpt;
+//探索したゴール座標
 struct point Goalpt;
 //迷路全体を表示する
-void printmap(char map[][MAX + 2], int height, int width)
+void printmap(int width, int height, char map[][MAX + 2])
 {
     //表示開始
     int i, j;
@@ -23,46 +30,66 @@ void printmap(char map[][MAX + 2], int height, int width)
         std::cout << std::endl;
     }
 }
-//移動数が入った迷路データから最短ルートを逆算する関数
-void findMSR(char map[][MAX + 2], struct point pt)
+void printMSR(int width, int height, char map[][MAX + 2])
 {
-    std::cout << __func__ << std::endl;
+    // std::cout << __func__ << std::endl;
+    int i, j;
+    struct node *p;
+    //歩数の数
+    int num = 1;
+    //移動数が入ったマップをけす
+    for (i = 1; i < height + 1; i++)
+    {
+        for (j = 1; j < width + 1; j++)
+        {
+            if (map[i][j] != '+')
+            {
+                map[i][j] = ' ';
+            }
+        }
+    }
+    //最短ルートの座標が入ったリストのデータをプロットしていく
+    for (p = rhead->next; p != NULL; p = p->next, num++)
+    {
+        map[p->cell.x][p->cell.y] = '0' + num;
+    }
+    printmap(width, height, map);
+}
+//移動数が入った迷路データから最短ルートを逆算する関数
+void findMSR(int width, int height, char map[][MAX + 2], struct point pt)
+{
+    // std::cout << __func__ << std::endl;
     int i[4] = {pt.x - 1, pt.x, pt.x + 1, pt.x}, j[4] = {pt.y, pt.y + 1, pt.y, pt.y - 1};
     char temp;
+    struct point shoteRoute;
     temp = map[pt.x][pt.y];
     count = atoi(&temp);
     count--;
-    std::cout << count << std::endl;
     for (int index = 0; index < 4; index++)
     {
         if (map[i[index]][j[index]] == ('0' + count))
         {
-            put(qhead, i[index], j[index]);
-        }
-        else if (map[i[index]][j[index]] != ('0' + count) && map[i[index]][j[index]] != '+' && map[i[index]][j[index]] < '1' + count)
-        {
-            map[i[index]][j[index]] = ' ';
-        }
-        if (map[i[index]][j[index]] == '1')
-        {
-
-            std::cout << i[index] << "," << j[index] << "is Start!!!!!!" << std::endl;
-            return;
+            shoteRoute.x = i[index];
+            shoteRoute.y = j[index];
+            insert_after(shoteRoute, rhead);
+            if (map[i[index]][j[index]] == '1')
+            {
+                std::cout << i[index] << "," << j[index] << "is Start!!!!!!" << std::endl;
+                return;
+            }
+            findMSR(width, height, map, shoteRoute);
         }
     }
-    printmap(map, 5, 5);
-    findMSR(map, get(qhead));
 }
-//移動できるかをチェックし移動できるところをputする
-void movecheck(char map[][MAX + 2], struct point pt)
+//4近傍で移動できるかをチェックし移動できる座標をキューにputする
+void movecheck(int width, int heigt, char map[][MAX + 2], struct point pt)
 {
-    std::cout << __func__ << std::endl;
+    // std::cout << __func__ << std::endl;
     int i[4] = {pt.x - 1, pt.x, pt.x + 1, pt.x}, j[4] = {pt.y, pt.y + 1, pt.y, pt.y - 1};
     char temp;
     temp = map[pt.x][pt.y];
     count = atoi(&temp);
     count++;
-    std::cout << count << std::endl;
     for (int index = 0; index < 4; index++)
     {
         if ((map[i[index]][j[index]] != '+') && (map[i[index]][j[index]] == '0'))
@@ -72,25 +99,29 @@ void movecheck(char map[][MAX + 2], struct point pt)
             std::cout << temp << std::endl;
             map[i[index]][j[index]] = temp;
         }
-        if (map[i[index]][j[index]] == 'g')
-        {
+        else if (map[i[index]][j[index]] == 'g')
+        { //ゴールのとき
             temp = '0' + count;
             std::cout << temp << std::endl;
             map[i[index]][j[index]] = temp;
+            //ゴール座標変数に座標を追加
             Goalpt.x = i[index];
             Goalpt.y = j[index];
+            //ゴール座標を最短ルートリストに追加
+            insert_after(Goalpt, rhead);
             std::cout << i[index] << "," << j[index] << "is GOALLLLL!!!!!!" << std::endl;
             return;
         }
     }
-    movecheck(map, get(qhead));
+    movecheck(width, heigt, map, get(qhead));
 }
 //経路探索関数
 void findRoute(int width, int height, char map[][MAX + 2])
 { //width:幅 height:高さ map[MAX]:要素
     //キューを初期化
     queueinit(qhead);
-    struct point startpt;
+    //ルートのリストを初期化
+    rhead->next = NULL;
 
     //表示開始
     int i, j;
@@ -116,11 +147,10 @@ void findRoute(int width, int height, char map[][MAX + 2])
     //
     put(qhead, startpt.x, startpt.y);
     struct point next = get(qhead);
-    movecheck(map, next);
-    printmap(map, height, width);
-    queueinit(qhead);
-    findMSR(map, Goalpt);
-    printmap(map, height, width);
+    movecheck(width, height, map, next);
+    findMSR(width, height, map, Goalpt);
+    print_whole_list(rhead);
+    printMSR(width, height, map);
 }
 
 int main(int argc, char *argv[])

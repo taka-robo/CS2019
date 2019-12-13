@@ -15,7 +15,7 @@ struct node
 };
 
 // void list_initialize(struct node *head);
-struct node *insert_after(int key, struct node *pt);
+struct node *insert_after(struct point point, struct node *pt);
 void print_whole_list(struct node *pt);
 void delete_all(struct node *head);
 
