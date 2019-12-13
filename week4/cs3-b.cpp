@@ -1,188 +1,328 @@
 #include <iostream>
-#include <vector>
 #include <cstring>
-#include <string>
 #include "list2.hpp"
-#define MAX 50 //MAX×MAXの迷路を生成
+#define MAX 50 //MAX×MAXの迷路を生成(迷路自体は周りに壁があるのでMAX+2xMAX+2)
+//迷路をint型に変換したときの対応`
+#define OBSTACLE -1
+#define START -2
+#define GOAL -3
 
 //経路探索につかうキュー
 node queuehead;
 node *qhead = &queuehead;
+//経路探索につかうスタック
+node stackhead;
+node *shead = &stackhead;
 //探索した最短経路を入れておくリスト
 node routehead;
 node *rhead = &routehead;
-int count = 1;
+//歩数カウンター
+int steps = 1;
 //スタート座標
 struct point startpt;
 //探索したゴール座標
 struct point Goalpt;
-//迷路全体を表示する
-void printmap(int width, int height, char map[][MAX + 2])
+
+/**
+ *  @fn     printmap
+ *  @brief  int型の迷路全体をchar型の書式に合わせて表示する
+ *  @param  width:迷路の幅
+ *  @param  height:迷路の高さ
+ *  @param  map:int型の迷路データ
+ *  @return なし
+ * */
+void printmap(int width, int height, int map[][MAX + 2])
 {
     //表示開始
-    int i, j;
-    for (i = 0; i < height + 2; i++)
+    int col, row;
+    for (col = 0; col < height + 2; col++)
     {
-        for (j = 0; j < width + 2; j++)
+        for (row = 0; row < width + 2; row++)
         {
-            std::cout << map[i][j];
+            //int型を課題の例題に合わせて表示
+            switch (map[col][row])
+            {
+            case OBSTACLE:
+                printf("  +");
+                break;
+            case START:
+                printf("  s");
+                break;
+            case GOAL:
+                printf("  g");
+                break;
+            default:
+                printf("%3d", map[col][row]);
+                break;
+            }
         }
-        std::cout << std::endl;
+        printf("\n");
     }
 }
-void printMSR(int width, int height, char map[][MAX + 2])
+/**
+ *  @fn     printShotestPath
+ *  @brief  1つの最短ルートだけを表示する
+ *  @param  width:迷路の幅
+ *  @param  height:迷路の高さ
+ *  @param  map:int型の迷路データ
+ *  @return なし
+ * */
+void printShotestPath(int width, int height, int map[][MAX + 2])
 {
     // std::cout << __func__ << std::endl;
-    int i, j;
+    int col, row;
     struct node *p;
     //歩数の数
     int num = 1;
     //移動数が入ったマップをけす
-    for (i = 1; i < height + 1; i++)
+    for (col = 1; col < height + 1; col++)
     {
-        for (j = 1; j < width + 1; j++)
+        for (row = 1; row < width + 1; row++)
         {
-            if (map[i][j] != '+')
+            if (map[col][row] != OBSTACLE)
             {
-                map[i][j] = ' ';
+                map[col][row] = 0;
             }
         }
     }
     //最短ルートの座標が入ったリストのデータをプロットしていく
     for (p = rhead->next; p != NULL; p = p->next, num++)
     {
-        map[p->cell.x][p->cell.y] = '0' + num;
+        map[p->cell.col][p->cell.row] = num;
     }
     printmap(width, height, map);
 }
+/**
+ *  @fn    findShortestPath 
+ *  @brief  移動数が格納された迷路データから1つの最短経路を逆算する 
+ *  @param  width:迷路の幅
+ *  @param  height:迷路の高さ
+ *  @param  map:int型の迷路データ
+ *  @param  pt:逆算を始める座標
+ *  @return なし
+ * */
 //移動数が入った迷路データから最短ルートを逆算する関数
-void findMSR(int width, int height, char map[][MAX + 2], struct point pt)
+void findShortestPath(int width, int height, int map[][MAX + 2], struct point pt)
 {
     // std::cout << __func__ << std::endl;
-    int i[4] = {pt.x - 1, pt.x, pt.x + 1, pt.x}, j[4] = {pt.y, pt.y + 1, pt.y, pt.y - 1};
-    char temp;
-    struct point shoteRoute;
-    temp = map[pt.x][pt.y];
-    count = atoi(&temp);
-    count--;
+    int col[4] = {pt.col - 1, pt.col, pt.col + 1, pt.col}, row[4] = {pt.row, pt.row + 1, pt.row, pt.row - 1};
+    struct point shortRoute;
+    steps = map[pt.col][pt.row] - 1;
     for (int index = 0; index < 4; index++)
     {
-        if (map[i[index]][j[index]] == ('0' + count))
+        if (map[col[index]][row[index]] == steps)
         {
-            shoteRoute.x = i[index];
-            shoteRoute.y = j[index];
-            insert_after(shoteRoute, rhead);
-            if (map[i[index]][j[index]] == '1')
+            shortRoute.col = col[index];
+            shortRoute.row = row[index];
+            insert_after(shortRoute, rhead);
+            if (map[col[index]][row[index]] != 1)
             {
-                std::cout << i[index] << "," << j[index] << "is Start!!!!!!" << std::endl;
-                return;
+                //スタート地点に戻るまで再帰呼び出し
+                findShortestPath(width, height, map, shortRoute);
             }
-            findMSR(width, height, map, shoteRoute);
         }
     }
 }
-//4近傍で移動できるかをチェックし移動できる座標をキューにputする
-void movecheck(int width, int heigt, char map[][MAX + 2], struct point pt)
+/**
+ *  @fn     moveCheck_queue
+ *  @brief  注目座標の4近傍に対して移動できるかをチェックし移動できる座標をキューにputする
+ *  @param  width:迷路の幅
+ *  @param  height:迷路の高さ
+ *  @param  map:int型の迷路データ
+ *  @param  pt:注目座標
+ *  @return なし
+ * */
+void moveCheck_queue(int width, int height, int map[][MAX + 2], struct point pt)
 {
     // std::cout << __func__ << std::endl;
-    int i[4] = {pt.x - 1, pt.x, pt.x + 1, pt.x}, j[4] = {pt.y, pt.y + 1, pt.y, pt.y - 1};
-    char temp;
-    temp = map[pt.x][pt.y];
-    count = atoi(&temp);
-    count++;
+    //上，右，下，左の順で探索
+    int col[4] = {pt.col - 1, pt.col, pt.col + 1, pt.col}, row[4] = {pt.row, pt.row + 1, pt.row, pt.row - 1};
+    steps = map[pt.col][pt.row] + 1;
     for (int index = 0; index < 4; index++)
-    {
-        if ((map[i[index]][j[index]] != '+') && (map[i[index]][j[index]] == '0'))
-        {
-            put(qhead, i[index], j[index]);
-            temp = '0' + count;
-            std::cout << temp << std::endl;
-            map[i[index]][j[index]] = temp;
+    { //4近傍探索
+        if ((map[col[index]][row[index]] != OBSTACLE) && (map[col[index]][row[index]] == 0))
+        { //移動可能場所があればキューにプットしその座標を探索済みに
+            map[col[index]][row[index]] = steps;
+            put(qhead, col[index], row[index]);
         }
-        else if (map[i[index]][j[index]] == 'g')
+        else if (map[col[index]][row[index]] == GOAL)
         { //ゴールのとき
-            temp = '0' + count;
-            std::cout << temp << std::endl;
-            map[i[index]][j[index]] = temp;
+            map[col[index]][row[index]] = steps;
             //ゴール座標変数に座標を追加
-            Goalpt.x = i[index];
-            Goalpt.y = j[index];
+            Goalpt.col = col[index];
+            Goalpt.row = row[index];
             //ゴール座標を最短ルートリストに追加
             insert_after(Goalpt, rhead);
-            std::cout << i[index] << "," << j[index] << "is GOALLLLL!!!!!!" << std::endl;
+            std::cout << col[index] << "," << row[index] << " is GOALLLLL!!!!!!" << std::endl;
             return;
         }
     }
-    movecheck(width, heigt, map, get(qhead));
+    printmap(width, height, map);
+    moveCheck_queue(width, height, map, get(qhead));
 }
-//経路探索関数
-void findRoute(int width, int height, char map[][MAX + 2])
+/**
+ *  @fn     moveCheck_stack
+ *  @brief  注目座標の4近傍に対して移動できるかをチェックし移動できる座標をスタックにpushしその点へ注目座標を移動させる
+ *  @param  width:迷路の幅
+ *  @param  height:迷路の高さ
+ *  @param  map:int型の迷路データ
+ *  @param  pt:注目座標
+ *  @return なし
+ * */
+void moveCheck_stack(int width, int height, int map[][MAX + 2], struct point pt)
+{
+    // std::cout << __func__ << std::endl;
+    //上，右，下，左の順で探索
+    int col[4] = {pt.col - 1, pt.col, pt.col + 1, pt.col}, row[4] = {pt.row, pt.row + 1, pt.row, pt.row - 1};
+    steps = map[pt.col][pt.row] + 1;
+    for (int index = 0; index < 4; index++)
+    {
+        if ((map[col[index]][row[index]] != OBSTACLE) && (map[col[index]][row[index]] == 0))
+        { //移動可能な場合
+            push(shead, col[index], row[index]);
+            map[col[index]][row[index]] = steps;
+            //注目座標を更新
+            pt.col = col[index];
+            pt.row = row[index];
+            printmap(width, height, map);
+            //次の座標へ移動
+            moveCheck_stack(width, height, map, pt);
+            return;
+        }
+        else if (map[col[index]][row[index]] == GOAL)
+        { //ゴールのとき
+            push(shead, col[index], row[index]);
+            map[col[index]][row[index]] = steps;
+            //ゴール座標変数に座標を追加
+            Goalpt.col = col[index];
+            Goalpt.row = row[index];
+            std::cout << col[index] << "," << row[index] << " is GOALLLLL!!!!!!" << std::endl;
+            return;
+        }
+    }
+    //どこにも進めなくなっていてかつゴールについていなければ通ってきた道を戻る．
+    moveCheck_stack(width, height, map, pop(shead));
+}
+/**
+ *  @fn     findRoute
+ *  @brief  キューとスタックを用いて経路探索を行う
+ *  @param  width:迷路の幅
+ *  @param  height:迷路の高さ
+ *  @param  map:int型の迷路データ
+ *  @return なし
+ * */
+void findRoute(int width, int height, const int map[][MAX + 2])
 { //width:幅 height:高さ map[MAX]:要素
+    int searchMapQueue[MAX + 2][MAX + 2];
+    int searchMapStack[MAX + 2][MAX + 2];
     //キューを初期化
     queueinit(qhead);
-    //ルートのリストを初期化
+    //スタックを初期化
+    stackinit(shead);
+    //最短ルートのリストを初期化
     rhead->next = NULL;
-
-    //表示開始
-    int i, j;
-    char temp;
-    for (i = 0; i < height + 2; i++)
+    //スタート地点を探索しつつ，もとのマップを探索用のsearchMapにコピー
+    int col, row;
+    for (col = 0; col < height + 2; col++)
     {
-        for (j = 0; j < width + 2; j++)
+        for (row = 0; row < width + 2; row++)
         {
-            if (map[i][j] == 's')
-            {
-                startpt.x = i;
-                startpt.y = j;
-                temp = '0' + count;
-                map[i][j] = temp;
+            searchMapQueue[col][row] = map[col][row];
+            searchMapStack[col][row] = map[col][row];
+            if (map[col][row] == START)
+            { //スタート座標のとき
+                startpt.col = col;
+                startpt.row = row;
+                searchMapQueue[col][row] = 1;
+                searchMapStack[col][row] = 1;
             }
-            std::cout << map[i][j];
         }
-        std::cout << std::endl;
     }
-    //表示終了
     //
     //経路探索アルゴリズムの実装部分
     //
-    put(qhead, startpt.x, startpt.y);
-    struct point next = get(qhead);
-    movecheck(width, height, map, next);
-    findMSR(width, height, map, Goalpt);
-    print_whole_list(rhead);
-    printMSR(width, height, map);
+    //スタート座標をキューに追加
+    std::cout << "start search(queue)" << std::endl;
+    put(qhead, startpt.col, startpt.row);
+    moveCheck_queue(width, height, searchMapQueue, get(qhead));
+    std::cout << "finish search(queue) and find shortest path" << std::endl;
+    findShortestPath(width, height, searchMapQueue, Goalpt);
+    std::cout << "show result" << std::endl;
+    printShotestPath(width, height, searchMapQueue);
+    //スタート座標をスタックに追加
+    std::cout << "start search(stack)" << std::endl;
+    push(shead, startpt.col, startpt.row);
+    moveCheck_stack(width, height, searchMapStack, startpt);
+    std::cout << "show result" << std::endl;
+    printmap(width, height, searchMapStack);
 }
-
+/**
+ *  @fn     c2imap
+ *  @brief  char型の迷路データをint型に変換する
+ *  @param  width:迷路の幅
+ *  @param  height:迷路の高さ
+ *  @param  charMap:char型の迷路データ
+ *  @param  intMap:int型の迷路データ
+ *  @return なし
+ * */
+void c2imap(int width, int height, const char charMap[][MAX + 2], int intMap[][MAX + 2])
+{
+    int col, row;
+    //表示開始
+    for (col = 0; col < height + 2; col++)
+    {
+        for (row = 0; row < width + 2; row++)
+        {
+            switch (charMap[col][row])
+            {
+            case '+':
+                intMap[col][row] = -1;
+                break;
+            case '0':
+                intMap[col][row] = 0;
+                break;
+            case 's':
+                intMap[col][row] = -2;
+                break;
+            case 'g':
+                intMap[col][row] = -3;
+                break;
+            }
+        }
+    }
+}
 int main(int argc, char *argv[])
-{                               //argc:引数の個数 argv:引数の文字列配列
-    char map[MAX + 2][MAX + 2]; //壁を含むのでMAX+2分の要素を確保
-    int width, height;          //幅,高さ
-    int i;
+{                                   //argc:引数の個数 argv:引数の文字列配列
+    char charMap[MAX + 2][MAX + 2]; //壁を含むのでMAX+2分の要素を確保
+    int width, height, col, intMap[MAX + 2][MAX + 2];
     if (argc <= 1)
     { //コマンドラインからの入力がない場合
         width = 5;
         height = 5;
-        strcpy(map[0], "+++++++");
-        strcpy(map[1], "+0s000+");
-        strcpy(map[2], "+00000+");
-        strcpy(map[3], "+0000++");
-        strcpy(map[4], "+00000+");
-        strcpy(map[5], "+0000g+");
-        strcpy(map[6], "+++++++");
+        strcpy(charMap[0], "+++++++");
+        strcpy(charMap[1], "+0s000+");
+        strcpy(charMap[2], "+0+++++");
+        strcpy(charMap[3], "+0000++");
+        strcpy(charMap[4], "++++00+");
+        strcpy(charMap[5], "+0000g+");
+        strcpy(charMap[6], "+++++++");
     }
     else
     { //コマンドラインからの入力がある場合
         //入力が正しいという前提
         height = argc - 1;
         width = strlen(argv[1]);
-        for (i = 0; i < height; i++)
+        for (col = 0; col < height; col++)
         {
-            strcpy(map[i], argv[i + 1]);
+            strcpy(charMap[col], argv[col + 1]);
         }
     }
-
-    //経路探索関数
-    findRoute(width, height, map);
-
+    //char型のマップをint型に変換
+    c2imap(width, height, charMap, intMap);
+    //探索する迷路を表示
+    std::cout << "input map" << std::endl;
+    printmap(width, height, intMap);
+    //経路探索
+    findRoute(width, height, intMap);
     return 0;
 }

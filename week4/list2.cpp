@@ -16,11 +16,11 @@ struct node *insert_after(struct point point, struct node *pt) //挿入したい
         printf("Not enough memory\n");
         exit(1); //終了
     }
-    new_node->cell.x = point.x; //新しいノードのxに値を格納
-    new_node->cell.y = point.y; //新しいノードのyに値を格納
-    new_node->next = pt->next;  //new_nodeのnextはptのnext
-    pt->next = new_node;        //ptのnextはnew_node
-    return new_node;            //new_nodeの先頭アドレスを返す
+    new_node->cell.col = point.col; //新しいノードのxに値を格納
+    new_node->cell.row = point.row; //新しいノードのyに値を格納
+    new_node->next = pt->next;      //new_nodeのnextはptのnext
+    pt->next = new_node;            //ptのnextはnew_node
+    return new_node;                //new_nodeの先頭アドレスを返す
 }
 /**
  * @brief 指定したリストの中身をすべて表示する
@@ -30,7 +30,7 @@ void print_whole_list(struct node *pt)
 {
     for (pt = pt->next; pt != NULL; pt = pt->next)
     {
-        printf("%d,%d -> ", pt->cell.x, pt->cell.y); //pのkeyを表示して
+        printf("%d,%d -> ", pt->cell.col, pt->cell.row); //pのkeyを表示して
     }
     printf("\n");
 }
@@ -70,10 +70,13 @@ void stackinit(struct node *head)
  * @param  num:スタックに入れたい整数 
  * @return なし
  */
-void push(struct node *head, struct point pt)
+void push(struct node *head, int col, int row)
 {
-    std::cout << __func__ << ":" << pt.x << "," << pt.y;
+    std::cout << __func__ << ":" << col << "," << row << "   ";
     struct node *p;
+    struct point pt;
+    pt.col = col;
+    pt.row = row;
     for (p = head; p->next != NULL; p = p->next)
     {
         //リストの末尾までnextを辿っていく処理（効率が悪い）
@@ -107,7 +110,7 @@ struct point pop(struct node *head)
     }
     //pの次の要素の値を取得し削除
     temp = delete_next(p);
-    std::cout << ":" << temp.x << "," << temp.y << "   ";
+    std::cout << ":" << temp.col << "," << temp.row << "   ";
     print_whole_list(head);
     return temp;
 }
@@ -147,12 +150,12 @@ void queueinit(struct node *head)
  * @param  num:キューに入れたい整数 
  * @return なし
  */
-void put(struct node *head, int x, int y)
+void put(struct node *head, int col, int row)
 {
     struct point pt;
-    pt.x = x;
-    pt.y = y;
-    std::cout << __func__ << ":" << x << "," << y << "   ";
+    pt.col = col;
+    pt.row = row;
+    std::cout << __func__ << ":" << col << "," << row << "   ";
     struct node *p;
     for (p = head; p->next != NULL; p = p->next)
     {
@@ -175,7 +178,7 @@ struct point get(struct node *head)
     {
         //リストの一番先頭のノードのkeyを取得して先頭のノードを削除
         temp = delete_next(head);
-        std::cout << ":" << temp.x << "," << temp.y << "   ";
+        std::cout << ":" << temp.col << "," << temp.row << "   ";
         print_whole_list(head);
         return temp;
     }
@@ -221,8 +224,8 @@ struct point delete_next(struct node *pt)
         exit(1);
     }
     //指定箇所の次のノードのx,yを格納
-    point.x = pt->next->cell.x;
-    point.y = pt->next->cell.y;
+    point.col = pt->next->cell.col;
+    point.row = pt->next->cell.row;
     //指定箇所の次のノードの次のノードのアドレスを格納
     struct node *temp = pt->next->next;
     //指定箇所の次のノードのメモリを開放

@@ -5,8 +5,8 @@
 
 struct point
 {
-    int x = 0;
-    int y = 0;
+    int col = 0;
+    int row = 0;
 };
 struct node
 {
@@ -20,12 +20,12 @@ void print_whole_list(struct node *pt);
 void delete_all(struct node *head);
 
 void stackinit(struct node *head);
-void push(struct node *head, struct point pt);
+void push(struct node *head, int col, int row);
 struct point pop(struct node *head);
 int stackempty(struct node *head);
 
 void queueinit(struct node *head);
-void put(struct node *head, int x, int y);
+void put(struct node *head, int col, int row);
 struct point get(struct node *head);
 int queueempty(struct node *head);
 
