@@ -13,9 +13,6 @@
 //経路探索につかうキュー
 node queuehead;
 node *qhead = &queuehead;
-//経路探索につかうスタック
-node stackhead;
-node *shead = &stackhead;
 //探索した最短経路を入れておくリスト
 node routehead;
 node *rhead = &routehead;
@@ -53,6 +50,9 @@ void printmap(int width, int height, int map[][MAX + 2])
                 break;
             case GOAL:
                 printf("  g");
+                break;
+            case 0:
+                printf("  .");
                 break;
             default:
                 printf("%3d", map[col][row]);
@@ -164,49 +164,6 @@ void moveCheck_queue(int width, int height, int map[][MAX + 2], struct point pt)
     moveCheck_queue(width, height, map, get(qhead));
 }
 /**
- *  @fn     moveCheck_stack
- *  @brief  注目座標の4近傍に対して移動できるかをチェックし移動できる座標をスタックにpushしその点へ注目座標を移動させる
- *  @param  width:迷路の幅
- *  @param  height:迷路の高さ
- *  @param  map:int型の迷路データ
- *  @param  pt:注目座標
- *  @return なし
- * */
-void moveCheck_stack(int width, int height, int map[][MAX + 2], struct point pt)
-{
-    // std::cout << __func__ << std::endl;
-    //上，右，下，左の順で探索
-    int col[4] = {pt.col - 1, pt.col, pt.col + 1, pt.col}, row[4] = {pt.row, pt.row + 1, pt.row, pt.row - 1};
-    steps = map[pt.col][pt.row] + 1;
-    for (int index = 0; index < 4; index++)
-    {
-        if ((map[col[index]][row[index]] != OBSTACLE) && (map[col[index]][row[index]] == 0))
-        { //移動可能な場合
-            push(shead, col[index], row[index]);
-            map[col[index]][row[index]] = steps;
-            //注目座標を更新
-            pt.col = col[index];
-            pt.row = row[index];
-            printmap(width, height, map);
-            //次の座標へ移動
-            moveCheck_stack(width, height, map, pt);
-            return;
-        }
-        else if (map[col[index]][row[index]] == GOAL)
-        { //ゴールのとき
-            push(shead, col[index], row[index]);
-            map[col[index]][row[index]] = steps;
-            //ゴール座標変数に座標を追加
-            Goalpt.col = col[index];
-            Goalpt.row = row[index];
-            std::cout << col[index] << "," << row[index] << " is GOALLLLL!!!!!!" << std::endl;
-            return;
-        }
-    }
-    //どこにも進めなくなっていてかつゴールについていなければ通ってきた道を戻る．
-    moveCheck_stack(width, height, map, pop(shead));
-}
-/**
  *  @fn     findRoute
  *  @brief  キューとスタックを用いて経路探索を行う
  *  @param  width:迷路の幅
@@ -217,12 +174,9 @@ void moveCheck_stack(int width, int height, int map[][MAX + 2], struct point pt)
 void findRoute(int width, int height, const int map[][MAX + 2])
 { //width:幅 height:高さ map[MAX]:要素
     int searchMapQueue[MAX + 2][MAX + 2];
-    int searchMapStack[MAX + 2][MAX + 2];
     struct point pt;
     //キューを初期化
     queueinit(qhead);
-    //スタックを初期化
-    stackinit(shead);
     //最短ルートのリストを初期化
     rhead->next = NULL;
     //スタート地点を探索しつつ，もとのマップを探索用のsearchMapにコピー
@@ -232,19 +186,17 @@ void findRoute(int width, int height, const int map[][MAX + 2])
         for (row = 0; row < width + 2; row++)
         {
             searchMapQueue[col][row] = map[col][row];
-            searchMapStack[col][row] = map[col][row];
             if (map[col][row] == START)
             { //スタート座標のとき
                 pt.col = col;
                 pt.row = row;
                 startpt.push_back(pt);
                 searchMapQueue[col][row] = 1;
-                searchMapStack[col][row] = 1;
             }
         }
     }
     //スタート座標が正しくとれているか表示
-    for (int i = 0; i < startpt.size(); i++)
+    for (size_t i = 0; i < startpt.size(); i++)
     {
         std::cout << startpt.at(i).col << "," << startpt.at(i).row << std::endl;
         put(qhead, startpt.at(i).col, startpt.at(i).row);
@@ -282,7 +234,7 @@ void c2imap(int width, int height, const char charMap[][MAX + 2], int intMap[][M
             case '+':
                 intMap[col][row] = OBSTACLE;
                 break;
-            case '0':
+            case '.':
                 intMap[col][row] = 0;
                 break;
             case 's':
@@ -302,13 +254,13 @@ int main(int argc, char *argv[])
     if (argc <= 1)
     { //コマンドラインからの入力がない場合
         width = 6;
-        height = 6;
-        strcpy(charMap[0], "+++++++");
-        strcpy(charMap[1], "+0g0000+");
-        strcpy(charMap[2], "+0000s0+");
-        strcpy(charMap[3], "+00s0s0+");
-        strcpy(charMap[4], "+00000g+");
-        strcpy(charMap[5], "+000g0s+");
+        height = 5;
+        strcpy(charMap[0], "++++++++");
+        strcpy(charMap[1], "+.g....+");
+        strcpy(charMap[2], "+....s.+");
+        strcpy(charMap[3], "+..s.s.+");
+        strcpy(charMap[4], "+......+");
+        strcpy(charMap[5], "+g..g.g+");
         strcpy(charMap[6], "++++++++");
     }
     else
