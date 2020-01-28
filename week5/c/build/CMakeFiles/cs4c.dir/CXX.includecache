@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/taka/Documents/cs2019/week5/c/src/cs4c.cpp
+iostream
+-
+cstring
+-
+list2.hpp
+/home/taka/Documents/cs2019/week5/c/src/list2.hpp
+vector
+-
+array
+-
+
+/home/taka/Documents/cs2019/week5/c/src/list2.cpp
+list2.hpp
+/home/taka/Documents/cs2019/week5/c/src/list2.hpp
+
+/home/taka/Documents/cs2019/week5/c/src/list2.hpp
+iostream
+-
+

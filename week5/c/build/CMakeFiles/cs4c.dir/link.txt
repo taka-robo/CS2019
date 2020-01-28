@@ -1,0 +1,1 @@
+/usr/bin/c++  -O3  -rdynamic CMakeFiles/cs4c.dir/src/cs4c.cpp.o CMakeFiles/cs4c.dir/src/list2.cpp.o  -o cs4c 
